@@ -21,7 +21,7 @@ context('Wait',()=>{
         //  cy.get("#content").should("contain","Data loaded with AJAX get request.");
     });
     
-    it.only('Test #3 - esperar a que el servicio devuelva una respuesta',()=>{
+    it('Test #3 - esperar a que el servicio devuelva una respuesta',()=>{
         cy.intercept('/ajaxdata').as('getRespuesta');
         cy.get("#ajaxButton").click();
         cy.wait('@getRespuesta',{timeout:16000})
