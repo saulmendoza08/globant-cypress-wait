@@ -13,16 +13,18 @@ context('Wait',()=>{
        cy.get('#content').should('contain','Data loaded with AJAX get request.')
     });
 
-    it.only('Test #2 - esperar con una expectativa BDD',()=>{
+    it('Test #2 - esperar con una expectativa BDD',()=>{
         cy.get("#ajaxButton").click();
-        cy.get("#content .bg-success").should("be.visible").and("Data loaded with AJAX get request.");
+        
+        cy.get("#content .bg-success",{timeout:26000}).should("be.visible");
+        
         //  cy.get("#content").should("contain","Data loaded with AJAX get request.");
     });
     
-    it('Test #3 - esperar a que el servicio devuelva una respuesta',()=>{
-        cy.intercept('/').as('getRespuesta');
-
-        cy.wait('@getRespuesta',{timeout:26000})
+    it.only('Test #3 - esperar a que el servicio devuelva una respuesta',()=>{
+        cy.intercept('/ajaxdata').as('getRespuesta');
+        cy.get("#ajaxButton").click();
+        cy.wait('@getRespuesta',{timeout:16000})
             .its('response.statusCode')
             .should('eq',200)
     });
